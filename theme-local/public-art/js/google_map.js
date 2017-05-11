@@ -352,14 +352,6 @@ function convertToCoordinates(ugly_coordinates){
     return {lat: latitude, lng: longitude};
 }
 
-function toggleViewMode(){
-    var swap = $('#gallery-container').html();
-    $('.list-group-item .pull-right').html()=='Open map view' ? $('.list-group-item .pull-right').html('Open gallery view') : $('.list-group-item .pull-right').html('Open map view');
-    $('#gallery-container').html($('.toggle-map').html());
-    $('.toggle-map').html(swap);
-    initMapAndAddLocations();
-}
-
 $(window).bind("load", function() {
     initMapAndAddLocations();
 });

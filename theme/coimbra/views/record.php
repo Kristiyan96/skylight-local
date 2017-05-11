@@ -5,6 +5,8 @@ $title = $this->skylight_utilities->getField("Title");
 $coverImageName = $this->skylight_utilities->getField("Image File Name");
 $logoImageName = $this->skylight_utilities->getField("Logo Thumbnail");
 $location = $this->skylight_utilities->getField("Institutional Map Reference");
+$webURL = $this->skylight_utilities->getField("Institutional Web URL");
+$linkToObject = $this->skylight_utilities->getField("Institutional Link to Object");
 
 $title = isset( $solr[$title] ) ? $solr[$title][0] : "Untitled";
 $image_name = isset( $solr[$coverImageName][0] ) ? $solr[$coverImageName][0] : "missing.jpg";
@@ -33,6 +35,7 @@ $jsonwidth = $jobj['width'];
 </div>
 
 <div id="openseadragon" class="cover-image-container full-width">
+    <a class="visible-xs show-info" onclick="$('html, body').animate({scrollTop:$('.record-info').offset().top-50}, 500);">Show info</a>
 </div>
 
 
@@ -73,7 +76,7 @@ $jsonwidth = $jobj['width'];
                 });
             </script>
         </div>
-        <div>
+        <div class="col-xs-12 col-md-6">
             <?php
             $t_segments = explode("##", $solr[$logoImageName][0]);
             $t_filename = $t_segments[1];
@@ -86,6 +89,10 @@ $jsonwidth = $jobj['width'];
 
             echo $thumbnailLink;
             ?>
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <a href="<?php echo $solr[$linkToObject][0]; ?>">Link to Object</a>
+            <a href="<?php echo $solr[$webURL][0]; ?>">Link to Institution</a>
         </div>
         <i class="fa fa-angle-double-down hidden-xs hidden-sm" aria-hidden="true"></i>
     </div>

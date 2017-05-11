@@ -5,7 +5,7 @@
  * Initializing the google map, adding pinpoints
  */
 
-var map;
+map;
 
 function initMap(center) {
     center = center || {lat:51.509865, lng:-0.118092};
@@ -328,22 +328,28 @@ function addLocation(ugly_coordinates, record_name, index, image_url){
         map: map,
         title: record_name,
         icon: image_url,
-        id: index
+        id: index,
+        opacity: 0
     });
+
+    markers[index] = marker;
 
     marker.addListener('mouseover', function() {
         $('.row.record img.active').removeClass('active');
-        $('html, body').animate({
-            scrollTop: $('.row.record.'+marker.id).offset().top - 100
-        }, 1000);
+        // $('html, body').animate({
+        //     scrollTop: $('.row.record.'+marker.id).offset().top - 100
+        // }, 1000);
         $('.row.record.'+marker.id + ' img').addClass('active');
-
     });
 
     // Didn't allow users to click on the reord he liked
     // marker.addListener('mouseout', function() {
     //     $('.list-group-item .pull-right').html()=='Open map view' ? $('.row.record').fadeIn() : $('.row.record').hide();
     // });
+}
+
+function removeMarker(id){
+    markers[id].toggle();
 }
 
 // Reading coordinates
@@ -356,17 +362,8 @@ function convertToCoordinates(ugly_coordinates){
     return {lat: latitude, lng: longitude};
 }
 
-function toggleViewMode(){
-    var swap = $('#gallery-container').html();
-    $('.list-group-item .pull-right').html()=='Open map view' ? $('.list-group-item .pull-right').html('Open gallery view') : $('.list-group-item .pull-right').html('Open map view');
-    $('#gallery-container').html($('.toggle-map').html());
-    $('.toggle-map').html(swap);
-    initMapAndAddLocations();
-}
-
 function initMapAndAddLocations(){
     initMap();
-
     for (var i = 0; i < locations.length; i++) {
         addLocation(locations[i]['location'], locations[i]['title'], locations[i]['index'], locations[i]['image_url']);
     }
@@ -379,5 +376,4 @@ $(window).scroll(function(){
     else{
         $(".sidebar-nav").css('position', 'fixed').css('top', 50);
     }
-
 });

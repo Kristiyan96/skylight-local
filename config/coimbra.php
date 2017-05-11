@@ -46,7 +46,8 @@ $config['skylight_fields'] = array(
     'Additional URLs'                       => 'dc.description.uri.en',
     'University Contact'                    => 'dc.contributor.other.en',
     'Contact email'                         => 'dc.contributor.otheremail.en',
-    'Date of Submission'                    => 'dc.date.submitted.en'
+    'Date of Submission'                    => 'dc.date.submitted.en',
+    'University'                            => 'dc.relation.ispartofpath.en'
 );
 
 
@@ -68,7 +69,8 @@ $config['skylight_recorddisplay'] = array(
     'Description',
     'Dimensions',
     'Material/Medium',
-    'Tags'
+    'Tags',
+    'University'
 );
 
 $config['skylight_descriptiondisplay'] = array(

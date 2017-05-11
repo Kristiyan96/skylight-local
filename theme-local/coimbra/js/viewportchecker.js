@@ -14,42 +14,47 @@
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
  */
+markers = {};
 
-(function($){
-    $.fn.viewportChecker = function(useroptions){
-        // Define options and extend with user
-        var options = {
-            classToAdd: 'visible',
-            offset: 100,
-            callbackFunction: function(elem){}
-        };
-        $.extend(options, useroptions);
-        // Cache the given element and height of the browser
-        var $elem = this,
-            windowHeight = $(window).height();
+    (function($){
+        $.fn.viewportChecker = function(useroptions){
+            // Define options and extend with user
+            var options = {
+                classToAdd: 'visible',
+                offset: 100,
+                callbackFunction: function(elem){}
+            };
+            $.extend(options, useroptions);
+            // Cache the given element and height of the browser
+            var $elem = this,
+                windowHeight = $(window).height();
 
-        this.checkElements = function(){
-            $elem.each(function(){
+            this.checkElements = function(){
+                $elem.each(function(){
 
-                var $obj = $(this);
-                if($obj.visible()){
-                    $obj.addClass(options.classToAdd);
-                    // $obj.removeClass("invisible");
+                    var $obj = $(this);
+                    var id = $obj.attr('class').split(/\s+/)[3];
+                    if($obj.visible()){
+                        $obj.addClass(options.classToAdd);
+                        if (markers[id]){markers[id].setOpacity(1);}
+                        options.callbackFunction($obj);
+                    }
+                    else{
+                        $obj.removeClass(options.classToAdd);
+                        if (markers[id]){markers[id].setOpacity(0);}
+                        options.callbackFunction($obj);
+                    }
+                });
+            };
 
-                    // Do the callback function. Callback wil send the jQuery object as parameter
-                    options.callbackFunction($obj);
-                }
+
+            // Run checkelements on load and scroll
+            $(window).scroll(this.checkElements);
+            this.checkElements();
+
+            // On resize change the height var
+            $(window).resize(function(e){
+                windowHeight = e.currentTarget.innerHeight;
             });
         };
-
-
-        // Run checkelements on load and scroll
-        $(window).scroll(this.checkElements);
-        this.checkElements();
-
-        // On resize change the height var
-        $(window).resize(function(e){
-            windowHeight = e.currentTarget.innerHeight;
-        });
-    };
-})(jQuery);
+    })(jQuery);
